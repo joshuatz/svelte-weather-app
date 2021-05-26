@@ -11,6 +11,19 @@
 	--background-color-dark: teal;
 	--accent-color: teal;
 	--on-accent-color: white;
+	/** Halfmoon resets */
+	--base-font-size: unset;
+	--base-html-font-size: unset;
+	--base-html-font-size-1600: unset;
+	/** Halfmoon tweaks */
+	--lm-card-bg-color: var(--background-color);
+	--content-and-card-spacing-xs: 1rem;
+	/** Util vars */
+	--border-light: var(--card-border-width) solid var(--lm-card-border-color);
+}
+
+.row {
+	width: 100%;
 }
 
 html,body {
@@ -19,4 +32,19 @@ html,body {
 
 .card-slim {
 	--content-and-card-spacing: 8px;
+}
+
+.justify-evenly {
+	justify-content: space-evenly;
+}
+
+.flex-center-children {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.border-light {
+	border: var(--border-light);
+	border-radius: 4px;
 }

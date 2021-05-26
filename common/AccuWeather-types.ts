@@ -247,3 +247,5 @@ export interface MultiDayForecastResponse {
 		Link: string;
 	}>;
 }
+
+export type DayForecast = MultiDayForecastResponse['DailyForecasts'][number];
