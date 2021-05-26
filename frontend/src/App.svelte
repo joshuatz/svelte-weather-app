@@ -1,11 +1,10 @@
 <script lang="ts">
 	import type { MultiDayForecastResponse } from '@types';
 	import { slide } from 'svelte/transition';
+	import ForecastDisplayWrapper from './components/ForecastDisplayWrapper.svelte';
 	import LocationPicker from './components/LocationPicker.svelte';
 	import ModePicker from './components/ModePicker.svelte';
-	import MultiDayCard from './components/MultiDayCard.svelte';
-	import MultiDayCarousel from './components/MultiDayCarousel.svelte';
-	import { DisplayMode, ForecastData, WeatherLocation } from './store';
+	import { ForecastData, WeatherLocation } from './store';
 	import { fetchFromBackend, timeshiftDailyForecasts } from './utils';
 
 	let isLoading = false;
@@ -46,13 +45,8 @@
 
 	{#if $WeatherLocation === null}
 		<LocationPicker />
-	{:else if $DisplayMode === 'Standard'}
-		<MultiDayCard
-			forecast={$ForecastData}
-			location={$WeatherLocation.name}
-		/>
 	{:else}
-		<MultiDayCarousel
+		<ForecastDisplayWrapper
 			forecast={$ForecastData}
 			location={$WeatherLocation.name}
 		/>

@@ -22,6 +22,11 @@
 	--border-light: var(--card-border-width) solid var(--lm-card-border-color);
 }
 
+/** Halfmoon body resets */
+body {
+	height: unset;
+}
+
 .row {
 	width: 100%;
 }
@@ -42,6 +47,10 @@ html,body {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+}
+
+[data-placeholder='true'] .placeholder-blur {
+	filter: blur(0.2rem);
 }
 
 .placeholder-line {
