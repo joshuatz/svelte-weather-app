@@ -8,6 +8,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/vite-plugin-svelte": "^1.0.0-next.7",
+		"halfmoon": "^1.1.1",
 		"svelte": "^3.37.0",
 		"svelte-preprocess": "^4.7.2",
 		"typescript": "^4.2.4",

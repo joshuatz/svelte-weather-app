@@ -27,7 +27,13 @@
 		 * of JS in `.svelte` files.
 		 */
 		"allowJs": true,
-		"checkJs": true
+		"checkJs": true,
+		/**
+		 * Path aliasing for easier imports
+		 */
+		"paths": {
+			"@types": ["../common/types.ts"]
+		}
 	},
 	/**
 	 * Use global.d.ts instead of compilerOptions.types
@@ -37,6 +43,7 @@
 		"src/**/*.d.ts",
 		"src/**/*.ts",
 		"src/**/*.js",
-		"src/**/*.svelte"
+		"src/**/*.svelte",
+		"../common/**/*.ts"
 	]
 }

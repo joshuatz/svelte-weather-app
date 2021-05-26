@@ -1,0 +1,22 @@
+:root {
+	/** Theme palette colors: darkslategray, teal, lightseagreen, mediumturquoise, lemonchiffon */
+	/** Main palette */
+	--primary-color: darkslategray;
+	--on-primary-color: white;
+	--primary-color-darker: hsl(180, 25%, 20%);
+	--secondary-color: mediumturquoise;
+	--on-secondary-color: black;
+	--background-color: lemonchiffon;
+	--background-color-light: lemonchiffon;
+	--background-color-dark: teal;
+	--accent-color: teal;
+	--on-accent-color: white;
+}
+
+html,body {
+	background-color: var(--background-color-dark);
+}
+
+.card-slim {
+	--content-and-card-spacing: 8px;
+}
