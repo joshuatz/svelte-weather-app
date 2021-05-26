@@ -1,0 +1,6 @@
+node_modules
+scratchpad.*
+.env.json
+build
+dist
+packed.zip
