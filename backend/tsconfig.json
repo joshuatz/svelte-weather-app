@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"lib": ["es2020"],
+		"paths": {
+			"@types": ["../common/types.ts"]
+		}
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"name": "svelte-weather-app-backend",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"dev": "ts-node-dev --respawn --transpile-only server.ts",
+		"start": "ts-node server.ts"
+	},
+	"keywords": [],
+	"author": {
+		"name": "Joshua Tzucker",
+		"url": "https://joshuatz.com/?utm_source=package"
+	},
+	"devDependencies": {
+		"@types/express": "^4.17.12",
+		"@types/node": "^15.6.1",
+		"@types/node-fetch": "^2.5.10",
+		"ts-node-dev": "^1.1.6",
+		"typescript": "^4.3.2"
+	},
+	"dependencies": {
+		"express": "^4.17.1",
+		"node-fetch": "^2.6.1"
+	}
+}

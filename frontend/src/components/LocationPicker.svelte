@@ -97,6 +97,13 @@
 			</div>
 		</div>
 	{:else}
+		{#if autoLocationFailed}
+			<div class="alert filled alert-secondary">
+				<div class="alert-heading">Sorry...</div>
+				Looks like we couldn't auto-detect your location properly. Please
+				search for it and then select it below instead.
+			</div>
+		{/if}
 		<form transition:slide on:submit={runAutocomplete}>
 			<div class="row align-items-center justify-evenly">
 				<div class="form-group">

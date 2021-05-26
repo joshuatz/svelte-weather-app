@@ -1,4 +1,4 @@
-import type { MultiDayForecastResponse } from '@types';
+import type { ApiService, MultiDayForecastResponse } from '@types';
 import { DaysOfTheWeek } from './constants';
 import { Env } from './store';
 
@@ -24,7 +24,7 @@ export function getIconPath(iconId: number) {
  * @param params Extra parameters to pass
  */
 export async function fetchFromBackend(
-	service: 'ipLookup' | 'fiveDayForecast' | 'locationSearch',
+	service: ApiService,
 	params?: Record<string, any>
 ) {
 	const base = Env.backend_base;
