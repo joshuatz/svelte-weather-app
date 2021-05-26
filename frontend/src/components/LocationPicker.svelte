@@ -76,7 +76,7 @@
 
 <div class="location-picker card card-slim">
 	{#if autoLocationResult && !autoLocationFailed}
-		<div class="card">
+		<div class="card suggested-location">
 			<div class="alert filled">
 				<div class="alert-heading">Suggested Location</div>
 				Based on your IP address, it looks like you might be located near
@@ -96,22 +96,26 @@
 				>
 			</div>
 		</div>
-	{/if}
-	<form on:submit={runAutocomplete}>
-		<div class="row align-items-center justify-evenly">
-			<div class="form-group">
-				<label for="location-search-input">Location search:</label>
-				<input
+	{:else}
+		<form transition:slide on:submit={runAutocomplete}>
+			<div class="row align-items-center justify-evenly">
+				<div class="form-group">
+					<label for="location-search-input">Location search:</label>
+					<input
+						disabled={autoLocationFailed === false}
+						id="location-search-input"
+						class="form-control form-control-lg"
+						type="text"
+						bind:value={searchInput}
+					/>
+				</div>
+				<button
 					disabled={autoLocationFailed === false}
-					id="location-search-input"
-					class="form-control form-control-lg"
-					type="text"
-					bind:value={searchInput}
-				/>
+					class="search-button btn btn-success">Search</button
+				>
 			</div>
-			<button class="search-button btn btn-success">Search</button>
-		</div>
-	</form>
+		</form>
+	{/if}
 	{#if searchResults}
 		<div class="search-results" transition:slide>
 			{#if searchResults.length}
@@ -176,5 +180,16 @@
 	}
 	.pick-list .option button {
 		margin-right: 8px;
+	}
+	.card.suggested-location {
+		background: linear-gradient(
+			0deg,
+			var(--primary-color),
+			var(--primary-color-light)
+		);
+	}
+	.alert {
+		background: linear-gradient(0deg, #13212e, #142637);
+		color: white;
 	}
 </style>

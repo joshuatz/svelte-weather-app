@@ -45,8 +45,8 @@
 		flex: 1;
 	}
 	.day {
-		background-color: #ef8a17;
-		color: white;
+		background-color: var(--secondary-color);
+		color: var(--on-secondary-color);
 		padding-bottom: 10px;
 	}
 	.day .body {

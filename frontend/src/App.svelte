@@ -9,6 +9,8 @@
 
 	let isLoading = false;
 
+	// If the user's desired location changes, we need to request a new forecast
+	// data set for the new location, and push it to the store
 	WeatherLocation.subscribe(async (updatedLocation) => {
 		if (updatedLocation) {
 			isLoading = true;
@@ -37,9 +39,24 @@
 			</div>
 		</div>
 	{:else}
-		<div transition:slide>
-			<!-- Display mode picker -->
-			<ModePicker />
+		<div class="row">
+			<div class="col-6" transition:slide>
+				<ModePicker />
+			</div>
+			{#if $WeatherLocation}
+				<div class="col-6 d-flex" transition:slide>
+					<div
+						class="card card-slim shadow-sm w-full d-flex flex-center-children"
+					>
+						<button
+							on:click={() => {
+								WeatherLocation.set(null);
+							}}
+							class="btn btn-secondary">Reset Location</button
+						>
+					</div>
+				</div>
+			{/if}
 		</div>
 	{/if}
 

@@ -5,11 +5,12 @@
 </script>
 
 <div class="card shadow-lg">
+	<!-- Location -->
 	<div class="location row flex-center-children">
 		<h2 class="title">{location}</h2>
 	</div>
 
-	<!-- Headline Callout -->
+	<!-- Phrase / description -->
 	<div class="headline-callout w-full">
 		<div class="alert alert-primary filled" role="alert">
 			<h3 class="title">How do things look?</h3>

@@ -29,7 +29,7 @@
 				{#each days as dailyForecast, index (dailyForecast.EpochDate)}
 					<!-- Skip first entry - today -->
 					{#if index > 0}
-						<div class="forecastDay border-light">
+						<div class="forecastDay shadow-lg border-light">
 							<div class="row justify-content-center">
 								<div class="title">
 									{getFormattedDate(dailyForecast.Date).day}
@@ -74,8 +74,16 @@
 	}
 	.forecastDay {
 		width: 30%;
+		min-width: 120px;
 		margin-left: auto;
 		margin-right: auto;
+		margin-bottom: 4px;
+		background: linear-gradient(
+			282deg,
+			var(--primary-color-lighter),
+			var(--primary-color-darker)
+		);
+		color: white;
 	}
 	.forecastDay img {
 		align-self: center;
@@ -85,6 +93,7 @@
 	.forecastDay .phrase {
 		font-style: italic;
 		text-align: center;
+		padding: 0px 4px;
 	}
 	:global([data-placeholder='true'] img) {
 		background-color: var(--secondary-color);

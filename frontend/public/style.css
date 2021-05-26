@@ -4,19 +4,27 @@
 	--primary-color: darkslategray;
 	--on-primary-color: white;
 	--primary-color-darker: hsl(180, 25%, 20%);
+	--primary-color-lighter: hsl(180, 25%, 30%);
 	--secondary-color: mediumturquoise;
 	--on-secondary-color: black;
 	--background-color: lemonchiffon;
 	--background-color-light: lemonchiffon;
+	--background-color-light-lighter: hsl(54, 100%, 94%);
 	--background-color-dark: teal;
+	--background-color-dark-darker: hsl(180, 100%, 15%);
 	--accent-color: teal;
 	--on-accent-color: white;
+	--card-bg-stop-light: white;
+	--card-bg-stop-dark: #d2ebeb;
+	--card-bg: linear-gradient(180deg, var(--card-bg-stop-light), var(--card-bg-stop-dark));
 	/** Halfmoon resets */
 	--base-font-size: unset;
 	--base-html-font-size: unset;
 	--base-html-font-size-1600: unset;
 	/** Halfmoon tweaks */
 	--lm-card-bg-color: var(--background-color);
+	--lm-card-bg-image: var(--card-bg);
+	--lm-alert-filled-primary-bg-image: linear-gradient(var(--background-color-dark), var(--background-color-dark-darker));
 	--content-and-card-spacing-xs: 1rem;
 	/** Util vars */
 	--border-light: var(--card-border-width) solid var(--lm-card-border-color);
@@ -32,7 +40,7 @@ body {
 }
 
 html,body {
-	background-color: var(--background-color-dark);
+	background: linear-gradient(#0C304F, #333C47);
 }
 
 .card-slim {
