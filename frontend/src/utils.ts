@@ -83,3 +83,73 @@ export function timeshiftDailyForecasts(response: MultiDayForecastResponse) {
 		now = addDays(now, 1);
 	}
 }
+
+/**
+ * Generate some sample data for placeholder elements while loading
+ */
+export function getSampleForecast(): MultiDayForecastResponse {
+	const now = new Date();
+	const nextThreeDays = [addDays(now, 1), addDays(now, 2), addDays(now, 3)];
+	const tomorrow = nextThreeDays[0];
+	const today = {
+		Date: now.toString(),
+		EpochDate: now.getTime() / 1000,
+		Temperature: {
+			Minimum: {
+				Value: 43.0,
+				Unit: 'F',
+				UnitType: 18,
+			},
+			Maximum: {
+				Value: 55.0,
+				Unit: 'F',
+				UnitType: 18,
+			},
+		},
+		Day: {
+			Icon: 14,
+			IconPhrase: 'Partly sunny w/ showers',
+			HasPrecipitation: true,
+		},
+		Night: {
+			Icon: 38,
+			IconPhrase: 'Mostly cloudy',
+			HasPrecipitation: false,
+		},
+		Sources: [],
+		MobileLink: '',
+		Link: '',
+	};
+	const headline = {
+		EffectiveDate: now.toString(),
+		EffectiveEpochDate: now.getTime(),
+		Severity: 3,
+		Text: 'Expect showery weather Wednesday morning through Wednesday evening',
+		Category: 'rain',
+		EndDate: tomorrow.toString(),
+		EndEpochDate: tomorrow.getTime(),
+		MobileLink: '',
+		Link: '',
+	};
+	return {
+		Headline: headline,
+		DailyForecasts: [
+			today,
+			{
+				...today,
+				Date: nextThreeDays[0].toString(),
+				EpochDate: nextThreeDays[0].getTime(),
+			},
+			{
+				...today,
+				Date: nextThreeDays[1].toString(),
+				EpochDate: nextThreeDays[1].getTime(),
+			},
+			{
+				...today,
+				Date: nextThreeDays[2].toString(),
+				EpochDate: nextThreeDays[2].getTime(),
+			},
+		],
+	};
+}

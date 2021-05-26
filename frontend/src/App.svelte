@@ -1,10 +1,10 @@
 <script lang="ts">
 	import type { MultiDayForecastResponse } from '@types';
+	import { slide } from 'svelte/transition';
 	import LocationPicker from './components/LocationPicker.svelte';
 	import ModePicker from './components/ModePicker.svelte';
 	import MultiDayCard from './components/MultiDayCard.svelte';
 	import MultiDayCarousel from './components/MultiDayCarousel.svelte';
-	import ObscureLoader from './components/UI/ObscureLoader.svelte';
 	import { DisplayMode, ForecastData, WeatherLocation } from './store';
 	import { fetchFromBackend, timeshiftDailyForecasts } from './utils';
 
@@ -31,12 +31,21 @@
 </script>
 
 <main>
-	<!-- Display mode picker -->
-	<ModePicker />
+	{#if isLoading}
+		<div class="card" transition:slide>
+			<div class="alert alert-primary filled" role="alert">
+				<div>Loading...</div>
+			</div>
+		</div>
+	{:else}
+		<div transition:slide>
+			<!-- Display mode picker -->
+			<ModePicker />
+		</div>
+	{/if}
+
 	{#if $WeatherLocation === null}
 		<LocationPicker />
-	{:else if isLoading || !$ForecastData}
-		<ObscureLoader />
 	{:else if $DisplayMode === 'Standard'}
 		<MultiDayCard
 			forecast={$ForecastData}
