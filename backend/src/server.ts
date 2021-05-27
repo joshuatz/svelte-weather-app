@@ -3,6 +3,7 @@ import cors from 'cors';
 import csrf from 'csurf';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
+import path from 'path';
 import { Config } from './constants';
 import { fetchAndProxy, getAccuEndpoint, respond } from './utils';
 
@@ -17,6 +18,11 @@ const csrfProtection = csrf({
 });
 
 const app = express();
+
+// Static frontend hosting - double imports are due to TS vs transpiled dist
+app.use(express.static(path.join(__dirname, '../../frontend/dist/')));
+app.use(express.static(path.join(__dirname, '../../../../frontend/dist/')));
+
 app.use(
 	// Necessary for csrf / csurf
 	cookieParser(),
@@ -82,7 +88,7 @@ app.get('/api/', (req, res) => {
 		}
 
 		if (qParams.service === 'ipLookup') {
-			const ip = req.header('x-forwarded-for') || req.ip;
+			const ip = req.headers['x-forwarded-for'] || req.ip;
 
 			if (ip === '::1' || ip === '127.0.0.1') {
 				return respond(res, 500, {
@@ -92,8 +98,9 @@ app.get('/api/', (req, res) => {
 			}
 
 			const endpoint = getAccuEndpoint('/locations/v1/cities/ipaddress', {
-				q: req.ip,
+				q: ip,
 			});
+			console.log({ ip, xForwarded: req.headers['x-forwarded-for'] });
 			return fetchAndProxy(res, endpoint);
 		}
 

@@ -4,7 +4,6 @@ import type {
 	MultiDayForecastResponse,
 } from '@types';
 import { writable } from 'svelte/store';
-export { default as Env } from '../.env.json';
 
 export const DisplayMode = writable<'Standard' | 'Cards'>('Standard');
 

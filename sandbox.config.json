@@ -1,0 +1,9 @@
+{
+	"hardReloadOnChange": false,
+	"template": "node",
+	"container": {
+		"node": "14"
+	},
+	"view": "browser",
+	"startScript": "start"
+}

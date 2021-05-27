@@ -1,12 +1,7 @@
 import type { ApiService, MultiDayForecastResponse } from '@types';
 import { get } from 'svelte/store';
-import { DaysOfTheWeek } from './constants';
-import {
-	AccuWeatherTokenFailed,
-	CsrfToken,
-	Env,
-	ForbiddenFailure,
-} from './store';
+import { BackendBase, DaysOfTheWeek } from './constants';
+import { AccuWeatherTokenFailed, CsrfToken, ForbiddenFailure } from './store';
 
 export function delay(delayMs: number) {
 	return new Promise((res) => setTimeout(res, delayMs));
@@ -34,7 +29,7 @@ export async function fetchFromBackend(
 	params?: Record<string, any>
 ) {
 	const csrfToken = get(CsrfToken);
-	let base = Env.backend_base;
+	let base = BackendBase;
 	if (service === 'getCsrfToken') {
 		base = `${base}csrf/`;
 	} else {
