@@ -6,6 +6,12 @@ export interface ValueSet {
 	UnitType: number;
 }
 
+export interface LocationSet {
+	ID: string;
+	LocalizedName: string;
+	EnglishName?: string;
+}
+
 interface DirectionSet {
 	Degrees: number;
 	Localized: string;

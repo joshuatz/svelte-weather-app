@@ -63,9 +63,13 @@
 
 	function handleAutoLocationChoice(choice: 'reject' | 'confirm') {
 		if (choice === 'confirm') {
+			const { LocalizedName, Country, AdministrativeArea } =
+				autoLocationResult;
 			WeatherLocation.set({
 				key: autoLocationResult.Key,
-				name: autoLocationResult.LocalizedName,
+				LocalizedName,
+				Country,
+				AdministrativeArea,
 			});
 		} else {
 			// This will trigger the manual search & pick flow
@@ -146,9 +150,16 @@
 								<button
 									class="btn btn-success"
 									on:click={() => {
+										const {
+											LocalizedName,
+											Country,
+											AdministrativeArea,
+										} = location;
 										WeatherLocation.set({
 											key: location.Key,
-											name: location.LocalizedName,
+											LocalizedName,
+											Country,
+											AdministrativeArea,
 										});
 									}}>Select</button
 								>

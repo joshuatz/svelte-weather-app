@@ -1,5 +1,6 @@
 <script lang="ts">
-	import type { MultiDayForecastResponse } from '@types';
+	import type { CsrfTokenResponse, MultiDayForecastResponse } from '@types';
+	import { onMount } from 'svelte';
 	import { slide } from 'svelte/transition';
 	import ForecastDisplayWrapper from './components/ForecastDisplayWrapper.svelte';
 	import LocationPicker from './components/LocationPicker.svelte';
@@ -7,12 +8,15 @@
 	import ObscureLoader from './components/UI/ObscureLoader.svelte';
 	import {
 		AccuWeatherTokenFailed,
+		CsrfToken,
+		ForbiddenFailure,
 		ForecastData,
 		WeatherLocation,
 	} from './store';
 	import { fetchFromBackend, timeshiftDailyForecasts } from './utils';
 
 	let isLoading = false;
+	let locationString = '';
 
 	// If the user's desired location changes, we need to request a new forecast
 	// data set for the new location, and push it to the store
@@ -29,14 +33,28 @@
 			} catch (e) {
 				ForecastData.set(null);
 			}
+			locationString = `${updatedLocation.LocalizedName}, ${updatedLocation.AdministrativeArea.LocalizedName}`;
 			isLoading = false;
 		} else {
 			ForecastData.set(null);
+			locationString = '';
+		}
+	});
+
+	onMount(async () => {
+		if (!$CsrfToken) {
+			isLoading = true;
+			const tokenResponse: CsrfTokenResponse = await fetchFromBackend(
+				'getCsrfToken'
+			);
+			CsrfToken.set(tokenResponse.token);
+			isLoading = false;
 		}
 	});
 </script>
 
 <main>
+	<!-- Top Menu Bar -->
 	{#if isLoading}
 		<div class="card" transition:slide>
 			<div class="alert alert-primary filled" role="alert">
@@ -66,17 +84,25 @@
 	{/if}
 
 	{#if $WeatherLocation === null}
-		<LocationPicker />
+		{#if $CsrfToken}
+			<LocationPicker />
+		{/if}
 	{:else}
 		<ForecastDisplayWrapper
 			forecast={$ForecastData}
-			location={$WeatherLocation.name}
+			location={locationString}
 		/>
 	{/if}
 
 	{#if $AccuWeatherTokenFailed}
 		<ObscureLoader
 			loadingText="Authorization failed. Either over API limit or incorrect token."
+		/>
+	{/if}
+
+	{#if $ForbiddenFailure}
+		<ObscureLoader
+			loadingText="Authorization failed, please try reloading the page for a fresh token"
 		/>
 	{/if}
 </main>

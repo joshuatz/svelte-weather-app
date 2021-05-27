@@ -27,6 +27,7 @@
 	}
 	.location .title {
 		font-size: 2rem;
+		margin: 4px auto 10px auto;
 	}
 	.headline-callout h3.title {
 		font-size: 1.3rem;
@@ -39,5 +40,16 @@
 		width: 95%;
 		margin-left: 5%;
 		font-style: italic;
+	}
+	@media (max-width: 500px) {
+		.location .title {
+			font-size: 1.5rem;
+		}
+		.headline-callout h3.title {
+			font-size: 1.1rem;
+		}
+		.alert {
+			padding: 8px;
+		}
 	}
 </style>

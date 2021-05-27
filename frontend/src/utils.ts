@@ -1,6 +1,12 @@
 import type { ApiService, MultiDayForecastResponse } from '@types';
+import { get } from 'svelte/store';
 import { DaysOfTheWeek } from './constants';
-import { AccuWeatherTokenFailed, Env } from './store';
+import {
+	AccuWeatherTokenFailed,
+	CsrfToken,
+	Env,
+	ForbiddenFailure,
+} from './store';
 
 export function delay(delayMs: number) {
 	return new Promise((res) => setTimeout(res, delayMs));
@@ -27,26 +33,40 @@ export async function fetchFromBackend(
 	service: ApiService,
 	params?: Record<string, any>
 ) {
-	const base = Env.backend_base;
+	const csrfToken = get(CsrfToken);
+	let base = Env.backend_base;
+	if (service === 'getCsrfToken') {
+		base = `${base}csrf/`;
+	} else {
+		base = `${base}api/`;
+	}
 	const finalParams = {
 		...params,
 		service,
 	};
-	const urlInstance = new URL(base);
+	const urlInstance = new URL(`${base}`);
 	urlInstance.search = new URLSearchParams(finalParams).toString();
 	const endpoint = urlInstance.toString();
 
-	const fetchRes = await fetch(endpoint);
+	const headers = new Headers();
+	if (!!csrfToken) {
+		headers.append('CSRF-Token', csrfToken);
+	}
+
+	const fetchRes = await fetch(endpoint, {
+		headers,
+		credentials: 'include',
+	});
 
 	if (fetchRes.status !== 200) {
 		if (fetchRes.status === 401) {
 			AccuWeatherTokenFailed.set(true);
 		}
+		if (fetchRes.status === 403) {
+			ForbiddenFailure.set(true);
+		}
 		throw new Error(`Bad Response from Backend - ${fetchRes.statusText}`);
 	}
-
-	// @TODO - remove - faking slow responses right now
-	await delay(1000);
 
 	return fetchRes.json();
 }

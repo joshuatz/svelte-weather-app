@@ -64,7 +64,7 @@
 	.phrase {
 		font-size: 1.14rem;
 		margin-left: 6px;
-		padding: 6px;
+		padding-left: 6px;
 	}
 	img {
 		width: 100px;
@@ -75,7 +75,7 @@
 		.wrapper {
 			border: none;
 			box-shadow: none;
-			min-height: 220px;
+			min-height: 160px;
 		}
 		.day,
 		.night {
@@ -90,9 +90,12 @@
 		}
 		.night {
 			position: absolute;
-			top: 104px;
+			top: 80px;
 			left: 50px;
 			width: calc(100% - 50px);
+		}
+		img {
+			width: 60px;
 		}
 	}
 	@media (max-width: 380px) {

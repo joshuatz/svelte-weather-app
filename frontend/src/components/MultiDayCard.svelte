@@ -65,12 +65,16 @@
 <style>
 	.multi-day-forecast {
 		margin-top: 20px;
+		padding: 10px;
 	}
 	.today .headline {
-		font-size: 1.2rem;
+		margin-top: 0px;
+		margin-bottom: 4px;
+		font-size: 1.6rem;
 	}
 	.forecast .headline {
-		font-size: 1.2rem;
+		font-size: 1.4rem;
+		margin: 8px auto 6px auto;
 	}
 	.forecastDay {
 		width: 30%;
@@ -109,6 +113,14 @@
 		}
 		.forecastDay img {
 			flex: 0;
+		}
+	}
+	@media (max-height: 840px) {
+		.forecast .headline {
+			display: none;
+		}
+		.forecast {
+			padding-top: 8px;
 		}
 	}
 </style>

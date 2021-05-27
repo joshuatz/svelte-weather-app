@@ -1,4 +1,6 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import csrf from 'csurf';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import { Config } from './constants';
@@ -8,17 +10,45 @@ const limiter = rateLimit({
 	windowMs: 30 * 60 * 1000, // 30 minutes
 	max: 100,
 });
+
+const csrfProtection = csrf({
+	cookie: true,
+	ignoreMethods: ['HEAD', 'OPTIONS'],
+});
+
 const app = express();
 app.use(
+	// Necessary for csrf / csurf
+	cookieParser(),
+	// Enable CORS, based on config values
+	// Uses combined list of RegExp patterns and hardcoded origins
 	cors({
 		origin: Config.corsAllowListCombined,
+		preflightContinue: true,
+		credentials: true,
 	}),
 	// Limit requests per IP
 	limiter
 );
+
+// CSRF protection, with excluded route that still captures token
+app.use((req, res, next) => {
+	csrfProtection(req, res, function (e: any) {
+		if (req.path === '/csrf/') {
+			next();
+		} else {
+			next(e);
+		}
+	});
+});
+
 const port = Config.port;
 
-app.get('/', (req, res) => {
+app.get('/csrf/', (req, res) => {
+	res.status(200).send({ token: req.csrfToken() });
+});
+
+app.get('/api/', (req, res) => {
 	const qParams = req.query;
 	res.set('Content-Type', 'application/json');
 

@@ -30,7 +30,10 @@
 </script>
 
 <div data-placeholder={usePlaceholder}>
-	<HeaderCard {headline} {location} />
+	<HeaderCard
+		{headline}
+		location={usePlaceholder ? 'Seattle, Washington' : location}
+	/>
 
 	{#if $DisplayMode === 'Standard'}
 		<MultiDayCard {forecast} />

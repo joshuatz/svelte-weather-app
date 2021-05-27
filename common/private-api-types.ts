@@ -8,12 +8,21 @@ export interface CommonResponse {
 	errorMsg?: string;
 }
 
+export interface CsrfTokenResponse {
+	token: string;
+}
+
 export type PrivateApiResponse = CommonResponse &
 	(
 		| MultiDayForecastResponse
 		| IpSearchResponse
 		| AutocompleteSearchResponse
+		| CsrfTokenResponse
 		| {}
 	);
 
-export type ApiService = 'ipLookup' | 'fiveDayForecast' | 'locationSearch';
+export type ApiService =
+	| 'ipLookup'
+	| 'fiveDayForecast'
+	| 'locationSearch'
+	| 'getCsrfToken';
