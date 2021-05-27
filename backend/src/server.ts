@@ -1,14 +1,26 @@
+import cors from 'cors';
 import express from 'express';
+import rateLimit from 'express-rate-limit';
 import { Config } from './constants';
 import { fetchAndProxy, getAccuEndpoint, respond } from './utils';
 
+const limiter = rateLimit({
+	windowMs: 30 * 60 * 1000, // 30 minutes
+	max: 100,
+});
 const app = express();
+app.use(
+	cors({
+		origin: Config.corsAllowListCombined,
+	}),
+	// Limit requests per IP
+	limiter
+);
 const port = Config.port;
 
 app.get('/', (req, res) => {
 	const qParams = req.query;
 	res.set('Content-Type', 'application/json');
-	res.set('Access-Control-Allow-Origin', '*');
 
 	if (typeof qParams.service === 'string') {
 		if (
