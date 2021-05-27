@@ -88,6 +88,7 @@
 	.forecastDay img {
 		align-self: center;
 		min-width: 80px;
+		max-width: 120px;
 		height: auto;
 	}
 	.forecastDay .phrase {
@@ -100,5 +101,14 @@
 		margin-top: 6px;
 		width: 90px;
 		height: auto;
+	}
+
+	@media (max-width: 440px) {
+		.forecastDay {
+			width: 90%;
+		}
+		.forecastDay img {
+			flex: 0;
+		}
 	}
 </style>

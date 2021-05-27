@@ -1,13 +1,8 @@
 {
+	"extends": "./tsconfig.base.json",
 	"compilerOptions": {
-		"strict": true,
-		"allowJs": true,
-		"checkJs": true,
-		"esModuleInterop": true,
-		"resolveJsonModule": true,
-		"lib": ["es2020"],
-		"paths": {
-			"@types": ["../common/types.ts"]
-		}
-	}
+		"rootDirs": ["./src/", "../common"],
+		"outDir": "./dist/"
+	},
+	"include": ["./src/**/*", "./.env.example.json", "../common/**/*"]
 }

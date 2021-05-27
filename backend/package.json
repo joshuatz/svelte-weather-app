@@ -1,11 +1,12 @@
 {
 	"name": "svelte-weather-app-backend",
 	"version": "1.0.0",
-	"description": "",
-	"main": "server.js",
+	"private": "true",
+	"main": "dist/server.js",
 	"scripts": {
-		"dev": "ts-node-dev --respawn --transpile-only server.ts",
-		"start": "ts-node server.ts"
+		"dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+		"build": "tsc",
+		"start": "node dist/backend/src/server.js"
 	},
 	"keywords": [],
 	"author": {

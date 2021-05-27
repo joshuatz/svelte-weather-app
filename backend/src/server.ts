@@ -41,7 +41,6 @@ app.get('/', (req, res) => {
 
 		if (qParams.service === 'ipLookup') {
 			const ip = req.header('x-forwarded-for') || req.ip;
-			console.log(ip);
 
 			if (ip === '::1' || ip === '127.0.0.1') {
 				return respond(res, 500, {

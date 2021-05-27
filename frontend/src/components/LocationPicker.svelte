@@ -23,6 +23,10 @@
 		lastSearched = searchInput;
 		isLoading = true;
 
+		if (!searchInput.length) {
+			return;
+		}
+
 		try {
 			searchResults = await fetchFromBackend('locationSearch', {
 				q: searchInput,
@@ -117,7 +121,8 @@
 					/>
 				</div>
 				<button
-					disabled={autoLocationFailed === false}
+					disabled={autoLocationFailed === false ||
+						!searchInput.length}
 					class="search-button btn btn-success">Search</button
 				>
 			</div>

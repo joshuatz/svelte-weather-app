@@ -1,7 +1,7 @@
-import { PrivateApiResponse } from '@types';
 import type { Response } from 'express';
 import fetch from 'node-fetch';
 import { URL, URLSearchParams } from 'url';
+import type { PrivateApiResponse } from '../../common/types';
 import { AccuApiBase, Config } from './constants';
 
 export function getAccuEndpoint(apiPath: string, params?: Record<string, any>) {

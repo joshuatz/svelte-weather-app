@@ -1,0 +1,38 @@
+{
+	"name": "svelte-weather-app",
+	"version": "1.0.0",
+	"private": true,
+	"description": "Demo project, showing the use of Svelte, TypeScript, and Express to build a weather forecast web app",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/joshuatz/svelte-weather-app.git"
+	},
+	"bugs": {
+		"url": "https://github.com/joshuatz/svelte-weather-app/issues"
+	},
+	"author": {
+		"name": "Joshua Tzucker",
+		"url": "https://joshuatz.com/?utm_source=package"
+	},
+	"homepage": "https://github.com/joshuatz/svelte-weather-app",
+	"keywords": [
+		"svelte demo",
+		"weather forecast"
+	],
+	"license": "MIT",
+	"scripts": {
+		"postinstall": "cd backend && npm install && cd .. && cd frontend && npm install",
+		"dev:backend": "cd backend && npm run dev",
+		"dev:frontend": "cd frontend && npm run dev",
+		"dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+		"build:frontend": "cd frontend && npm run build",
+		"build:backend": "cd backend && npm run build",
+		"build": "npm run build:frontend && npm run build:backend",
+		"start:frontend": "cd frontend && npm run serve",
+		"start:backend": "cd backend && npm run start",
+		"start": "concurrently \"npm run start:backend\" \"npm run start:frontend\""
+	},
+	"devDependencies": {
+		"concurrently": "^6.2.0"
+	}
+}

@@ -17,3 +17,5 @@ export const WeatherLocation =
  * The last fetched forecast data
  */
 export const ForecastData = writable<null | MultiDayForecastResponse>(null);
+
+export const AccuWeatherTokenFailed = writable(false);

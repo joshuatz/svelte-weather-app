@@ -4,7 +4,12 @@
 	import ForecastDisplayWrapper from './components/ForecastDisplayWrapper.svelte';
 	import LocationPicker from './components/LocationPicker.svelte';
 	import ModePicker from './components/ModePicker.svelte';
-	import { ForecastData, WeatherLocation } from './store';
+	import ObscureLoader from './components/UI/ObscureLoader.svelte';
+	import {
+		AccuWeatherTokenFailed,
+		ForecastData,
+		WeatherLocation,
+	} from './store';
 	import { fetchFromBackend, timeshiftDailyForecasts } from './utils';
 
 	let isLoading = false;
@@ -66,6 +71,12 @@
 		<ForecastDisplayWrapper
 			forecast={$ForecastData}
 			location={$WeatherLocation.name}
+		/>
+	{/if}
+
+	{#if $AccuWeatherTokenFailed}
+		<ObscureLoader
+			loadingText="Authorization failed. Either over API limit or incorrect token."
 		/>
 	{/if}
 </main>

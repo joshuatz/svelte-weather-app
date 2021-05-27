@@ -1,6 +1,6 @@
 import type { ApiService, MultiDayForecastResponse } from '@types';
 import { DaysOfTheWeek } from './constants';
-import { Env } from './store';
+import { AccuWeatherTokenFailed, Env } from './store';
 
 export function delay(delayMs: number) {
 	return new Promise((res) => setTimeout(res, delayMs));
@@ -37,7 +37,11 @@ export async function fetchFromBackend(
 	const endpoint = urlInstance.toString();
 
 	const fetchRes = await fetch(endpoint);
+
 	if (fetchRes.status !== 200) {
+		if (fetchRes.status === 401) {
+			AccuWeatherTokenFailed.set(true);
+		}
 		throw new Error(`Bad Response from Backend - ${fetchRes.statusText}`);
 	}
 
