@@ -88,9 +88,17 @@ app.get('/api/', (req, res) => {
 		}
 
 		if (qParams.service === 'ipLookup') {
-			const ip = req.headers['x-forwarded-for'] || req.ip;
+			let ip = '';
+			const ipStr = req.headers['x-forwarded-for'] || req.ip || '';
+			if (Array.isArray(ipStr)) {
+				ip = ipStr[0];
+			} else {
+				// Express will mix ipv6 with ipv4 for the same request
+				const mixedIps = ipStr.split(',');
+				ip = mixedIps[mixedIps.length - 1];
+			}
 
-			if (ip === '::1' || ip === '127.0.0.1') {
+			if (!ip || ip === '::1' || ip === '127.0.0.1') {
 				return respond(res, 500, {
 					errorMsg:
 						'Express cannot properly determine the requesting IP address. Is likely either coming through local dev or proxy.',
@@ -100,7 +108,6 @@ app.get('/api/', (req, res) => {
 			const endpoint = getAccuEndpoint('/locations/v1/cities/ipaddress', {
 				q: ip,
 			});
-			console.log({ ip, xForwarded: req.headers['x-forwarded-for'] });
 			return fetchAndProxy(res, endpoint);
 		}
 
