@@ -6,18 +6,17 @@
 	import MultiDayCard from './MultiDayCard.svelte';
 	import MultiDayCarousel from './MultiDayCarousel.svelte';
 
-	let forecastInput: MultiDayForecastResponse | null = null;
-	export { forecastInput as forecast };
+	export let forecastData: MultiDayForecastResponse | null = null;
 	export let location: string;
 	let forecast: MultiDayForecastResponse;
 	let usePlaceholder = false;
 
-	$: if (forecastInput) {
-		const clonedForecasts = forecastInput.DailyForecasts.slice();
+	$: if (forecastData) {
+		const clonedForecasts = forecastData.DailyForecasts.slice();
 		// We want next three days, not four, so remove last
 		clonedForecasts.pop();
 		forecast = {
-			...forecastInput,
+			...forecastData,
 			DailyForecasts: clonedForecasts,
 		};
 		usePlaceholder = false;

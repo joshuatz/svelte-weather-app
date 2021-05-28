@@ -31,16 +31,29 @@
 }
 
 /** Halfmoon body resets */
-body {
-	height: unset;
+html, body {
+	height: 100vh;
+	min-height: 100vh;
+	overflow: auto;
 }
 
 .row {
 	width: 100%;
 }
 
-html,body {
+html, body {
+	overflow: auto;
+}
+
+html {
 	background: linear-gradient(#0C304F, #333C47);
+}
+body {
+	background: none;
+}
+
+#app {
+	position: relative;
 }
 
 .card-slim {

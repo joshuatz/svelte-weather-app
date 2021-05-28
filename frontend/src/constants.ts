@@ -13,6 +13,10 @@ export const AccuWeatherApiBase =
 	'http://dataservice.accuweather.com/locations/v1';
 
 function getBackendBase(): string {
+	const defaultBase = import.meta.env.DEV
+		? 'http://localhost:3001'
+		: document.location.origin;
+
 	const envBase = import.meta.env.BACKEND_BASE;
 	let backendBase: string | null =
 		typeof envBase === 'string' && !!envBase ? envBase : null;
@@ -39,7 +43,7 @@ function getBackendBase(): string {
 		}
 	}
 
-	let finalBackendBase = backendBase || document.location.origin;
+	let finalBackendBase = backendBase || defaultBase;
 
 	// Make sure it has trailing slash, necessary for fetch util
 	if (!finalBackendBase.endsWith('/')) {

@@ -1,7 +1,12 @@
 import type { ApiService, MultiDayForecastResponse } from '@types';
 import { get } from 'svelte/store';
 import { BackendBase, DaysOfTheWeek } from './constants';
-import { AccuWeatherTokenFailed, CsrfToken, ForbiddenFailure } from './store';
+import {
+	AccuWeatherLimitExceeded,
+	AccuWeatherTokenFailed,
+	CsrfToken,
+	ForbiddenFailure,
+} from './store';
 
 export function delay(delayMs: number) {
 	return new Promise((res) => setTimeout(res, delayMs));
@@ -60,6 +65,9 @@ export async function fetchFromBackend(
 		if (fetchRes.status === 403) {
 			ForbiddenFailure.set(true);
 		}
+		if (fetchRes.status === 503 || fetchRes.status === 504) {
+			AccuWeatherLimitExceeded.set(true);
+		}
 		throw new Error(`Bad Response from Backend - ${fetchRes.statusText}`);
 	}
 
@@ -74,7 +82,13 @@ export function getFormattedDate(dateStrOrMs: string | number) {
 	};
 }
 
-export function addDays(date: Date, numToAdd = 1) {
+/**
+ * Returns a date object that is offset from the passed in one by x days
+ * - Does not mutate the input date object
+ * @param date Date to offset
+ * @param numToAdd Number of days to offset into the future
+ */
+export function addDays(date: Date, numToAdd = 1): Date {
 	const dateCopy = new Date(date.getTime());
 	dateCopy.setDate(dateCopy.getDate() + numToAdd);
 	return dateCopy;
@@ -85,7 +99,7 @@ export function addDays(date: Date, numToAdd = 1) {
  * - Since AccuWeather does not provide a mechanism to request data segmented by *local* time, the forecasted date stamps might not actually align with the days they go with (e.g. first element in array should always be today, but the stamp might be right on the border and actually be yesterday in local time)
  * - This is not ideal, but I don't see any API option to request localized slots
  * - **Warning**: This mutates the original object passed in
- * @param response
+ * @param response The original forecast response to timeshift
  */
 export function timeshiftDailyForecasts(response: MultiDayForecastResponse) {
 	let now = new Date();

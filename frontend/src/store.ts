@@ -23,8 +23,19 @@ export const WeatherLocation = writable<null | WeatherLocationStoredVal>(null);
  */
 export const ForecastData = writable<null | MultiDayForecastResponse>(null);
 
+/**
+ * If the app has encountered a network request indicating an authorization failure, likely caused by an invalid AccuWeather API key (set through Server env / config)
+ */
 export const AccuWeatherTokenFailed = writable(false);
+
+/**
+ * If the app has encountered some sort of response that would indicate exceeding the AccuWeather API limit
+ */
+export const AccuWeatherLimitExceeded = writable(false);
 
 export const CsrfToken = writable<string | null>(null);
 
+/**
+ * If the app has encountered a network request indicating a "forbidden" response failure, likely caused by missing (or mismatched) CSRF token
+ */
 export const ForbiddenFailure = writable(false);

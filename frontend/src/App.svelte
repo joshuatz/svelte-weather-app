@@ -5,8 +5,10 @@
 	import ForecastDisplayWrapper from './components/ForecastDisplayWrapper.svelte';
 	import LocationPicker from './components/LocationPicker.svelte';
 	import ModePicker from './components/ModePicker.svelte';
+	import PoweredBy from './components/PoweredBy.svelte';
 	import ObscureLoader from './components/UI/ObscureLoader.svelte';
 	import {
+		AccuWeatherLimitExceeded,
 		AccuWeatherTokenFailed,
 		CsrfToken,
 		ForbiddenFailure,
@@ -41,6 +43,7 @@
 		}
 	});
 
+	// On mount, check for CSRF token and get a new one if not present
 	onMount(async () => {
 		if (!$CsrfToken) {
 			isLoading = true;
@@ -89,14 +92,20 @@
 		{/if}
 	{:else}
 		<ForecastDisplayWrapper
-			forecast={$ForecastData}
+			forecastData={$ForecastData}
 			location={locationString}
 		/>
 	{/if}
 
 	{#if $AccuWeatherTokenFailed}
 		<ObscureLoader
-			loadingText="Authorization failed. Either over API limit or incorrect token."
+			loadingText="Authorization failed. Likely incorrect API Key"
+		/>
+	{/if}
+
+	{#if $AccuWeatherLimitExceeded}
+		<ObscureLoader
+			loadingText="Request failed - AccuWeather API quota exceeded. Please try back later."
 		/>
 	{/if}
 
@@ -106,3 +115,20 @@
 		/>
 	{/if}
 </main>
+<div class="powered-by-wrapper">
+	<PoweredBy />
+</div>
+
+<style>
+	main {
+		/** Help push "powered-by" label lower, if app has minimal content */
+		min-height: 400px;
+	}
+	.powered-by-wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 20px;
+		width: 100%;
+	}
+</style>

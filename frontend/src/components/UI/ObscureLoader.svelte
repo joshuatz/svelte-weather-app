@@ -15,9 +15,11 @@
 		top: 0px;
 		left: 0px;
 		position: absolute;
-		background-color: rgba(255, 255, 255, 0.9);
+		z-index: 1;
+		background-color: rgba(255, 255, 255, 0.92);
 	}
 	.loading-text {
 		font-size: 2rem;
+		margin: 40px;
 	}
 </style>
